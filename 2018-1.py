@@ -1,20 +1,29 @@
+from utils import timed
+
 # https://adventofcode.com/2018/day/1
 # Part 1
-with open('2018-1.txt') as f:
-    print(sum([int(i) for i in f.read().split('\n')]))
+@timed
+def part_one():
+    print(sum([int(i) for i in open('2018-1.txt').read().split('\n')]))
 
 # Part 2
-with open('2018-1.txt') as f:
-    frequencies = [int(i) for i in f.read().split('\n')]
 
-total = 0
-prev = set()
-found = False
-while not found:
-    for i in frequencies:
-        total += i
-        if total in prev:
-            print(total)
-            found = True
-            break
-        prev.add(total)
+@timed
+def part_two():
+    frequencies = [int(i) for i in open('2018-1.txt').read().split('\n')]
+
+    total = 0
+    prev = set()
+    found = False
+    while not found:
+        for i in frequencies:
+            total += i
+            if total in prev:
+                print(total)
+                found = True
+                break
+            prev.add(total)
+
+
+part_one()
+part_two()
