@@ -2,15 +2,9 @@ from utils import timed
 # https://adventofcode.com/2019/day/2
 # The hard part for this one was understanding the problem, the coding part was easy
 
-@timed
-def part_one():
-    with open('2019-2.txt') as f:
-        intcode = list(map(int, f.read().split(',')))
-
-    # Part of puzzle prompt
-    intcode[1] = 12
-    intcode[2] = 2
-
+def solve_intcode(intcode, noun, verb):
+    intcode[1] = noun
+    intcode[2] = verb
     opcode = None
     opcode_index = 0
     while True:
@@ -26,7 +20,12 @@ def part_one():
 
         opcode_index += 4
 
-    print(intcode[0])
+    return intcode[0]
+
+@timed
+def part_one():
+    intcode = list(map(int, open('2019-2.txt').read().split(',')))
+    print(solve_intcode(intcode, 12, 2))
 
 
 @timed
@@ -37,26 +36,10 @@ def part_two():
     for noun in range(100):
         for verb in range(100):
             test_input = intcode.copy()
-            test_input[1] = noun
-            test_input[2] = verb
-
-            opcode = None
-            opcode_index = 0
-            while True:
-                opcode = test_input[opcode_index]
-                if opcode == 99:
-                    break
-                if opcode == 1:
-                    test_input[test_input[opcode_index + 3]] = test_input[test_input[opcode_index + 1]] + test_input[test_input[opcode_index + 2]]
-                elif opcode == 2:
-                    test_input[test_input[opcode_index + 3]] = test_input[test_input[opcode_index + 1]] * test_input[test_input[opcode_index + 2]]
-                else:
-                    print(f'Unknown opcode {opcode}')
-
-                opcode_index += 4
-
-            if test_input[0] == 19690720:
+            output = solve_intcode(test_input, noun, verb)
+            if output == 19690720:
                 print(100 * noun + verb)
+                break
 
 
 part_one()
