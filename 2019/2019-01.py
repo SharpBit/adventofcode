@@ -4,7 +4,7 @@ from utils import timed
 
 @timed
 def part_one():
-    print(sum(int(mass) // 3 - 2 for mass in open('2019-1.txt').readlines()))
+    print(sum(int(mass) // 3 - 2 for mass in open('inputs/2019-01.txt').readlines()))
 
 
 def fuel_for_mass(mass):
@@ -16,7 +16,7 @@ def fuel_for_mass(mass):
 
 @timed
 def part_two():
-    print(sum(fuel_for_mass(int(mass)) for mass in open('2019-1.txt').readlines()))
+    print(sum(fuel_for_mass(int(mass)) for mass in open('inputs/2019-01.txt').readlines()))
 
 
 part_one()

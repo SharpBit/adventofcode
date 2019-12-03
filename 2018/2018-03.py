@@ -9,7 +9,7 @@ import re
 
 
 fabric = [[0 for i in range(1000)] for i in range(1000)]
-claims = [i for i in open('2018-3.txt').read().split('\n')]
+claims = [i for i in open('inputs/2018-03.txt').read().split('\n')]
 
 
 @timed

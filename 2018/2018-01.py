@@ -4,13 +4,13 @@ from utils import timed
 # Part 1
 @timed
 def part_one():
-    print(sum([int(i) for i in open('2018-1.txt').read().split('\n')]))
+    print(sum([int(i) for i in open('inputs/2018-01.txt').read().split('\n')]))
 
 # Part 2
 
 @timed
 def part_two():
-    frequencies = [int(i) for i in open('2018-1.txt').read().split('\n')]
+    frequencies = [int(i) for i in open('inputs/2018-01.txt').read().split('\n')]
 
     total = 0
     prev = set()

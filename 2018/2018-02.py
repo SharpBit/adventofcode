@@ -6,7 +6,7 @@ from utils import timed
 # Part 1
 @timed
 def part_one():
-    box_ids = open('2018-2.txt').read().split('\n')
+    box_ids = open('inputs/2018-02.txt').read().split('\n')
 
     times = []
     for b in box_ids:
@@ -18,7 +18,7 @@ def part_one():
 
 @timed
 def part_two():
-    box_ids = open('2018-2.txt').read().split('\n')
+    box_ids = open('inputs/2018-02.txt').read().split('\n')
 
     for x in box_ids:
         for y in box_ids:

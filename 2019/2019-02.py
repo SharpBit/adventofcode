@@ -24,14 +24,13 @@ def solve_intcode(intcode, noun, verb):
 
 @timed
 def part_one():
-    intcode = list(map(int, open('2019-2.txt').read().split(',')))
+    intcode = list(map(int, open('inputs/2019-02.txt').read().split(',')))
     print(solve_intcode(intcode, 12, 2))
 
 
 @timed
 def part_two():
-    with open('2019-2.txt') as f:
-        intcode = list(map(int, f.read().split(',')))
+    intcode = list(map(int, open('inputs/2019-02.txt').read().split(',')))
 
     for noun in range(100):
         for verb in range(100):
