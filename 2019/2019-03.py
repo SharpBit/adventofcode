@@ -28,19 +28,24 @@ def save_segments(instructions):
 
     return segments
 
+def find_intersections(wires):
+    intersections = []
+    for segment1 in wires[0]:
+        for segment2 in wires[1]:
+            if segment2[0][0] in range(*sorted((segment1[0][0], segment1[1][0]))) and segment1[0][1] in range(*sorted((segment2[0][1], segment2[1][1]))):
+                intersections.append((segment2[0][0], segment1[0][1]))
+            elif segment1[0][0] in range(*sorted((segment2[0][0], segment2[1][0]))) and segment2[0][1] in range(*sorted((segment1[0][1], segment1[1][1]))):
+                intersections.append((segment1[0][0], segment2[0][1]))
+
+    return intersections
+
 @timed
 def part_one():
     wires = [wire.split(',') for wire in open('inputs/2019-03.txt').readlines()]
     wire1 = save_segments(wires[0])
     wire2 = save_segments(wires[1])
 
-    intersections = []
-    for segment1 in wire1:
-        for segment2 in wire2:
-            if segment2[0][0] in range(*sorted((segment1[0][0], segment1[1][0]))) and segment1[0][1] in range(*sorted((segment2[0][1], segment2[1][1]))):
-                intersections.append((segment2[0][0], segment1[0][1]))
-            elif segment1[0][0] in range(*sorted((segment2[0][0], segment2[1][0]))) and segment2[0][1] in range(*sorted((segment1[0][1], segment1[1][1]))):
-                intersections.append((segment1[0][0], segment2[0][1]))
+    intersections = find_intersections([wire1, wire2])
 
     distances = [abs(x) + abs(y) for x, y in intersections]
     print(min(distances))
@@ -52,13 +57,7 @@ def part_two():
     wire1 = save_segments(wires[0])
     wire2 = save_segments(wires[1])
 
-    intersections = []
-    for segment1 in wire1:
-        for segment2 in wire2:
-            if segment2[0][0] in range(*sorted((segment1[0][0], segment1[1][0]))) and segment1[0][1] in range(*sorted((segment2[0][1], segment2[1][1]))):
-                intersections.append((segment2[0][0], segment1[0][1]))
-            elif segment1[0][0] in range(*sorted((segment2[0][0], segment2[1][0]))) and segment2[0][1] in range(*sorted((segment1[0][1], segment1[1][1]))):
-                intersections.append((segment1[0][0], segment2[0][1]))
+    intersections = find_intersections([wire1, wire2])
 
     intersection_steps = []
     for x, y in intersections:
