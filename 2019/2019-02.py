@@ -6,16 +6,19 @@ def solve_intcode(intcode, noun, verb):
     intcode[1] = noun
     intcode[2] = verb
     opcode = None
-    for i in range(0, len(intcode), 4):
-        opcode = intcode[i]
+    opcode_index = 0
+    while True:
+        opcode = intcode[opcode_index]
         if opcode == 99:
             break
         if opcode == 1:
-            intcode[intcode[i + 3]] = intcode[intcode[i + 1]] + intcode[intcode[i + 2]]
+            intcode[intcode[opcode_index + 3]] = intcode[intcode[opcode_index + 1]] + intcode[intcode[opcode_index + 2]]
         elif opcode == 2:
-            intcode[intcode[i + 3]] = intcode[intcode[i + 1]] * intcode[intcode[i + 2]]
+            intcode[intcode[opcode_index + 3]] = intcode[intcode[opcode_index + 1]] * intcode[intcode[opcode_index + 2]]
         else:
             print(f'Unknown opcode {opcode}')
+
+        opcode_index += 4
 
     return intcode[0]
 
