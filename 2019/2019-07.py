@@ -8,6 +8,7 @@ class IntcodeSolver:
         self.intcode = intcode.copy()
         self.pointer = 0
         self.output = None
+        self.increments = (4, 4, 2, 2, 3, 3, 4, 4)
 
     def get_param(self, mode, n):
         if mode == 0:
@@ -28,39 +29,30 @@ class IntcodeSolver:
 
             if opcode == 1:
                 self.intcode[self.intcode[self.pointer + 3]] = self.get_param(modes[0], 1) + self.get_param(modes[1], 2)
-                self.pointer += 4
             elif opcode == 2:
                 self.intcode[self.intcode[self.pointer + 3]] = self.get_param(modes[0], 1) * self.get_param(modes[1], 2)
-                self.pointer += 4
             elif opcode == 3:
-                try:
-                    self.intcode[self.intcode[self.pointer + 1]] = inputs.pop(0)
-                except IndexError:
+                if not inputs:
                     return self.output, True
-                self.pointer += 2
+                self.intcode[self.intcode[self.pointer + 1]] = inputs.pop(0)
             elif opcode == 4:
                 self.output = self.get_param(modes[0], 1)
-                self.pointer += 2
             elif opcode == 5:
                 if self.get_param(modes[0], 1) != 0:
-                    self.pointer = self.get_param(modes[1], 2)
-                else:
-                    self.pointer += 3
+                    self.pointer = self.get_param(modes[1], 2) - 3
             elif opcode == 6:
                 if self.get_param(modes[0], 1) == 0:
-                    self.pointer = self.get_param(modes[1], 2)
-                else:
-                    self.pointer += 3
+                    self.pointer = self.get_param(modes[1], 2) - 3
             elif opcode == 7:
                 self.intcode[self.intcode[self.pointer + 3]] = int(self.get_param(modes[0], 1) < self.get_param(modes[1], 2))
-                self.pointer += 4
             elif opcode == 8:
                 self.intcode[self.intcode[self.pointer + 3]] = int(self.get_param(modes[0], 1) == self.get_param(modes[1], 2))
-                self.pointer += 4
             elif opcode == 99:
                 return self.output, False
             else:
-                print(f'Unknown opcode {opcode} at index {self.pointer}')
+                raise ValueError(f'Unknown opcode {opcode} at index {self.pointer}')
+
+            self.pointer += self.increments[opcode - 1]
 
 
 @timed
@@ -68,13 +60,10 @@ def part_one():
     intcode = [int(x) for x in open('inputs/2019-07.txt').read().split(',')]
     combos = []
     for p in itertools.permutations(range(5)):
-        output, _ = IntcodeSolver(intcode).run([p[0], 0])
-        output, _ = IntcodeSolver(intcode).run([p[1], output])
-        output, _ = IntcodeSolver(intcode).run([p[2], output])
-        output, _ = IntcodeSolver(intcode).run([p[3], output])
-        output, _ = IntcodeSolver(intcode).run([p[4], output])
+        output = 0
+        for i in range(5):
+            output, _ = IntcodeSolver(intcode).run([p[i], output])
         combos.append(output)
-
     print(max(combos))
 
 @timed
@@ -88,13 +77,10 @@ def part_two():
         for i in range(5):
             amps.append(IntcodeSolver(intcode))
             amps[i].run(p[i])
-
         while is_running:
             for i, a in enumerate(amps):
                 last_output, is_running = a.run(last_output)
-
         combos.append(last_output)
-
     print(max(combos))
 
 
