@@ -42,11 +42,8 @@ class IntcodeSolver:
 
         return self.intcode[val] if save is False else val
 
-    def run(self, inputs):
+    def run(self, inp):
         """Returns output[int], is_running[bool]"""
-        # Part 2 only passes in 1 input
-        if type(inputs) == int:
-            inputs = [inputs]
 
         while True:
             instruction = f'{self.intcode[self.pointer]:05}'
@@ -58,9 +55,7 @@ class IntcodeSolver:
             elif opcode == 2:
                 self.intcode[self.get_param(modes[2], 3, save=True)] = self.get_param(modes[0], 1) * self.get_param(modes[1], 2)
             elif opcode == 3:
-                if not inputs:
-                    return self.output, True
-                self.intcode[self.get_param(modes[0], 1, save=True)] = inputs.pop(0)
+                self.intcode[self.get_param(modes[0], 1, save=True)] = inp
             elif opcode == 4:
                 self.output = self.get_param(modes[0], 1)
             elif opcode == 5:
