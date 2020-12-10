@@ -1,7 +1,5 @@
 from utils import timed
 
-from collections import Counter
-
 with open('inputs/2020-10.txt') as f:
     adapters = list(map(int, f.read().splitlines()))
 
@@ -10,8 +8,7 @@ def part_one(adapters):
     adapters += [0, max(adapters) + 3]
     adapters.sort()
     jolt_differences = [adapters[i + 1] - adapters[i] for i in range(len(adapters) - 1)]
-    counter = Counter(jolt_differences)
-    return counter[1] * counter[3]
+    return jolt_differences.count(1) * jolt_differences.count(3)
 
 @timed
 def part_two(adapters):
