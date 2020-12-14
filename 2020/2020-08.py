@@ -17,7 +17,7 @@ class Program:
         self.executed_instructions = []
 
     def read_instructions(self, instructions):
-        return [list(re.findall(r'(acc|jmp|nop) (\+|-)(\d+)', instruction)[0]) for instruction in instructions]
+        return [list(re.match(r'(acc|jmp|nop) (\+|-)(\d+)', instruction).groups()) for instruction in instructions]
 
     def run(self) -> (int, bool):
         """

@@ -9,7 +9,7 @@ def part_one():
     valid_passwords = 0
     for pw in passwords:
         regex_match = r'([0-9]+)-([0-9]+) ([a-z]): ([a-z]+)'
-        min_req, max_req, letter, password = re.findall(regex_match, pw)[0]
+        min_req, max_req, letter, password = re.match(regex_match, pw).groups()
         letter_count = sum(1 for char in password if char == letter)
         if int(min_req) <= letter_count <= int(max_req):
             valid_passwords += 1
@@ -20,7 +20,7 @@ def part_two():
     valid_passwords = 0
     for pw in passwords:
         regex_match = r'([0-9]+)-([0-9]+) ([a-z]): ([a-z]+)'
-        pos1, pos2, letter, password = re.findall(regex_match, pw)[0]
+        pos1, pos2, letter, password = re.match(regex_match, pw).groups()
         if (password[int(pos1) - 1] == letter) ^ (password[int(pos2) - 1] == letter):
             valid_passwords += 1
     return valid_passwords
