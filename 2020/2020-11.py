@@ -1,27 +1,9 @@
 from utils import timed
 
+import itertools
+
 with open('inputs/2020-11.txt') as f:
     seat_layout = [list(row) for row in f.read().splitlines()]
-
-def get_adjacent_seats(layout_dict, row, column):
-    seats = []
-    adjustments = [
-        (-1, -1),  # Top left
-        (-1, 0),  # Top
-        (-1, 1),  # Top right
-        (0, -1),  # Left
-        (0, 1),  # Right
-        (1, -1),  # Bottom left
-        (1, 0),  # Bottom
-        (1, 1)  # Bottom right
-    ]
-    for row_adj, col_adj in adjustments:
-        try:
-            seats.append(layout_dict[(row + row_adj, column + col_adj)])
-        except KeyError:
-            pass
-
-    return seats
 
 def save_seats(seat_layout):
     layout_dict = {}
@@ -31,43 +13,46 @@ def save_seats(seat_layout):
 
     return layout_dict
 
+def get_adjacent_seats(layout_dict, row, col):
+    seats = []
+    adjustments = [adj for adj in itertools.product([-1, 0, 1], repeat=2) if adj != (0, 0)]
+
+    for row_adj, col_adj in adjustments:
+        try:
+            seats.append(layout_dict[(row + row_adj, col + col_adj)])
+        except KeyError:
+            pass
+
+    return seats
+
 @timed
 def part_one(seat_layout):
     layout_dict = save_seats(seat_layout)
     while True:
         round_layout = layout_dict.copy()
-        for (row, col), seat in round_layout.items():
+        for coords, seat in round_layout.items():
             if seat == '.':
                 continue
 
-            adj_seats = get_adjacent_seats(round_layout, row, col)
+            adj_seats = get_adjacent_seats(round_layout, *coords)
 
             if seat == 'L' and adj_seats.count('#') == 0:
-                layout_dict[(row, col)] = '#'
+                layout_dict[coords] = '#'
             elif seat == '#' and adj_seats.count('#') >= 4:
-                layout_dict[(row, col)] = 'L'
+                layout_dict[coords] = 'L'
 
         if round_layout == layout_dict:
             return list(layout_dict.values()).count('#')
 
-def get_closest_seats(layout_dict, row, column):
+def get_closest_seats(layout_dict, row, col):
     """An adaptation of get_adjacent_seats"""
     seats = []
-    adjustments = [
-        (-1, -1),  # Top left
-        (-1, 0),  # Top
-        (-1, 1),  # Top right
-        (0, -1),  # Left
-        (0, 1),  # Right
-        (1, -1),  # Bottom left
-        (1, 0),  # Bottom
-        (1, 1)  # Bottom right
-    ]
+    adjustments = [adj for adj in itertools.product([-1, 0, 1], repeat=2) if adj != (0, 0)]
     for i, (row_adj, col_adj) in enumerate(adjustments):
         try:
             seat = '.'
             while seat == '.':
-                seat = layout_dict[(row + row_adj, column + col_adj)]
+                seat = layout_dict[(row + row_adj, col + col_adj)]
                 row_adj += adjustments[i][0]
                 col_adj += adjustments[i][1]
             seats.append(seat)
@@ -81,16 +66,16 @@ def part_two(seat_layout):
     layout_dict = save_seats(seat_layout)
     while True:
         round_layout = layout_dict.copy()
-        for (row, col), seat in round_layout.items():
+        for coords, seat in round_layout.items():
             if seat == '.':
                 continue
 
-            adj_seats = get_closest_seats(round_layout, row, col)
+            adj_seats = get_closest_seats(round_layout, *coords)
 
             if seat == 'L' and adj_seats.count('#') == 0:
-                layout_dict[(row, col)] = '#'
+                layout_dict[coords] = '#'
             elif seat == '#' and adj_seats.count('#') >= 5:
-                layout_dict[(row, col)] = 'L'
+                layout_dict[coords] = 'L'
 
         if round_layout == layout_dict:
             return list(layout_dict.values()).count('#')
