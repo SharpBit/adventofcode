@@ -18,16 +18,9 @@ def extend_pd(pd, axis_ranges):
     for axis in axis_ranges:
         upd_axis_ranges.append([axis[0] - 1, axis[1] + 1])
 
-    for x in range(*upd_axis_ranges[0]):
-        for y in range(*upd_axis_ranges[1]):
-            for z in range(*upd_axis_ranges[2]):
-                if len(upd_axis_ranges) == 4:
-                    for w in range(*upd_axis_ranges[3]):
-                        if pd.get((x, y, z, w)) is None:
-                            pd[(x, y, z, w)] = '.'
-                else:
-                    if pd.get((x, y, z)) is None:
-                        pd[(x, y, z)] = '.'
+    for coords in itertools.product(*[range(*axis) for axis in upd_axis_ranges]):
+        if pd.get(coords) is None:
+            pd[coords] = '.'
 
     return pd, upd_axis_ranges
 
