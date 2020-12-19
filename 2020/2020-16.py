@@ -45,11 +45,7 @@ def part_two(rules, nearby_tickets, your_ticket):
 
 
     counters = {k: [field for field, num_valid in Counter(v).items() if num_valid == len(valid_tickets)] for k, v in valid_rule_fields.items()}
-    print(counters)
     field_order = list(sorted(valid_rule_fields.keys(), key=lambda r: len(counters[r])))
-    print(field_order)
-    for f in field_order:
-        print(f, counters[f])
     possible_fields = list(range(20))
     field_nums = {}
     for rule in field_order:
