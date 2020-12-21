@@ -1,7 +1,8 @@
-from utils import timed
-
 from copy import deepcopy
-import re
+
+import regex as re  # Pip package called regex that makes it easy to find overlapping matches
+
+from utils import timed
 
 with open('inputs/2020-20.txt') as f:
     lines = f.read().splitlines()
@@ -197,7 +198,7 @@ def part_two(tiles, tile_borders, corner_tiles):
     image_possibilities = create_orientation_list(image)
     for p in image_possibilities:
         p_str = '\n'.join(p)
-        match = re.findall(r'#[#\.\n]{78}#[#\.]{4}##[#\.]{4}##[#\.]{4}###[#\.\n]{78}#[#\.]{2}#[#\.]{2}#[#\.]{2}#[#\.]{2}#[#\.]{2}#', p_str)
+        match = re.findall(r'#[#\.\n]{78}#[#\.]{4}##[#\.]{4}##[#\.]{4}###[#\.\n]{78}#[#\.]{2}#[#\.]{2}#[#\.]{2}#[#\.]{2}#[#\.]{2}#', p_str, overlapped=True)
         if len(match) > 0:
             print(p_str)
             return p_str.count('#') - len(match) * 15
