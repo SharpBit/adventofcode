@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 import regex as re  # Pip package called regex that makes it easy to find overlapping matches
 
 from utils import timed
@@ -113,7 +111,7 @@ def orient_next_tile(tiles, tiles_to_left, tiles_to_top, tile_id, first_col_id):
         except KeyError:
             next_tile_id = find_other_item(tile_borders[lrt_bot_border[::-1]], first_col_id)
 
-        tiles_to_top = deepcopy(tiles_to_left)
+        tiles_to_top = tiles_to_left
         tiles_to_left = []
     else:
         try:
