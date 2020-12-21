@@ -8,7 +8,7 @@ with open('inputs/2020-16.txt') as f:
     lines = f.read().splitlines()
     rule_matches = [list(re.match(r'([a-z ]+): (\d+)-(\d+) or (\d+)-(\d+)', line).groups()) for line in lines[:lines.index('')]]
     rules = {rule[0]: [int(r) if i % 2 == 0 else int(r) + 1 for i, r in enumerate(rule[1:])] for rule in rule_matches}
-    # rules = {rule[0]: [int(r) for r in rule[1:]] for rule in rule_matches}
+
     your_ticket = list(map(int, lines[lines.index('') + 2].split(',')))
     nearby_tickets = [list(map(int, line.split(','))) for line in lines[lines.index('') + 5:]]
 

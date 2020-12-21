@@ -1,4 +1,4 @@
-from sympy.ntheory.modular import crt
+from sympy.ntheory.modular import crt  # sympy is a module that does Chinese remainder theorem for you
 
 from utils import timed
 
