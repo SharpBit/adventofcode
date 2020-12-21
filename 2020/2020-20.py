@@ -200,7 +200,6 @@ def part_two(tiles, tile_borders, corner_tiles):
         p_str = '\n'.join(p)
         match = re.findall(r'#[#\.\n]{78}#[#\.]{4}##[#\.]{4}##[#\.]{4}###[#\.\n]{78}#[#\.]{2}#[#\.]{2}#[#\.]{2}#[#\.]{2}#[#\.]{2}#', p_str, overlapped=True)
         if len(match) > 0:
-            print(p_str)
             return p_str.count('#') - len(match) * 15
 
 
