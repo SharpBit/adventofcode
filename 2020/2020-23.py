@@ -3,46 +3,61 @@ from utils import timed
 with open('inputs/2020-23.txt') as f:
     cups = [int(c) for c in f.read()]
 
-def mix_cups(cups, moves):
-    cci = 0
+def mix_cups(cups, first_cup, moves):
     for i in range(moves):
-        current_cup = cups[cci]
-        removed_cups = []
-        while len(removed_cups) < 3:
-            try:
-                removed_cups.append(cups.pop(cci + 1))
-            except IndexError:
-                removed_cups.append(cups.pop(0))
+        if i == 0:
+            current_cup = first_cup
+        else:
+            current_cup = cups[current_cup]
+
+        # Remove 3 cups clockwise from the current cup
+        removed_cup1 = cups[current_cup]
+        removed_cup2 = cups[removed_cup1]
+        removed_cup3 = cups[removed_cup2]
+        cups[current_cup] = cups[removed_cup3]
+        del cups[removed_cup1]
+        del cups[removed_cup2]
+        del cups[removed_cup3]
 
         destination_cup = current_cup - 1
         lowest_cup = 1
-        while lowest_cup in removed_cups:
+        # Using == instead of in to hopefully save time
+        while lowest_cup == removed_cup1 or lowest_cup == removed_cup2 or lowest_cup == removed_cup3:
             lowest_cup += 1
 
-        while destination_cup in removed_cups or destination_cup < lowest_cup:
+        while (destination_cup == removed_cup1 or destination_cup == removed_cup2
+               or destination_cup == removed_cup3 or destination_cup < lowest_cup):  # noqa: W503
             destination_cup -= 1
             if destination_cup < lowest_cup:
                 destination_cup = len(cups) + 3
-        insert_index = cups.index(destination_cup)
-        cups = cups[:insert_index + 1] + removed_cups + cups[insert_index + 1:]
-        cci = cups.index(current_cup) + 1
-        if cci == len(cups):
-            cci = 0
 
-    return cups.index(1), cups
+        cups[removed_cup3] = cups[destination_cup]
+        cups[removed_cup2] = removed_cup3
+        cups[removed_cup1] = removed_cup2
+        cups[destination_cup] = removed_cup1
+
+    return cups
 
 @timed
 def part_one(cups):
-    one_cup, cups = mix_cups(cups.copy(), 100)
-    return ''.join([str(c) for c in cups[one_cup + 1:] + cups[:one_cup]])
+    first_cup = cups[0]
+    cups = {c: cups[i + 1] if i != len(cups) - 1 else cups[0] for i, c in enumerate(cups)}
+    cups = mix_cups(cups, first_cup, 100)
+    sequence = []
+    next_cup = cups[1]
+    while next_cup != 1:
+        sequence.append(str(next_cup))
+        next_cup = cups[next_cup]
+    return ''.join(sequence)
 
 @timed
 def part_two(cups):
-    one_cup, cups = mix_cups(cups + list(range(10, 1_000_001)), 10_000_000)
-    try:
-        return cups[one_cup + 1] * cups[one_cup + 2]
-    except IndexError:
-        return cups[one_cup + 1 - len(cups)] * cups[one_cup + 2 - len(cups)]
+    first_cup = cups[0]
+    original_cups = {c: cups[i + 1] if i != len(cups) - 1 else 10 for i, c in enumerate(cups)}
+    other_cups = {i: i + 1 if i != 1_000_000 else cups[0] for i in range(10, 1_000_001)}
+    cups = {**original_cups, **other_cups}
+    cups = mix_cups(cups, first_cup, 10_000_000)
+    return cups[1] * cups[cups[1]]
 
 
 print(part_one(cups))
