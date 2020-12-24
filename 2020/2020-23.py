@@ -52,6 +52,7 @@ def part_one(cups):
 
 @timed
 def part_two(cups):
+    # Takes about 15-17 seconds
     first_cup = cups[0]
     original_cups = {c: cups[i + 1] if i != len(cups) - 1 else 10 for i, c in enumerate(cups)}
     other_cups = {i: i + 1 if i != 1_000_000 else cups[0] for i in range(10, 1_000_001)}
