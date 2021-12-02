@@ -4,4 +4,4 @@ __pycache__/
 *.pyc
 .vs/
 x64/
-.vcxproj.user
+Debug/
