@@ -23,7 +23,7 @@ int main()
             depth2 += aim * num;
         }
     }
-    
+
 
     std::cout << "Part 1: " << pos * depth1 << std::endl;
     std::cout << "Part 2: " << pos * depth2 << std::endl;

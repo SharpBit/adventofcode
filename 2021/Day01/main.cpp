@@ -19,7 +19,7 @@ int main()
             num_inc++;
         }
     }
-    std::cout << num_inc << std::endl;
+    std::cout << "Part 1: " << num_inc << std::endl;
 
     // Part 2
     std::vector<int> slidingDepths;
@@ -33,6 +33,6 @@ int main()
             num_sliding_inc++;
         }
     }
-    std::cout << num_sliding_inc << std::endl;
+    std::cout << "Part 2: " << num_sliding_inc << std::endl;
     return 0;
 }
