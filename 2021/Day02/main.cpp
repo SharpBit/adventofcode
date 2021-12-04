@@ -1,7 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <string>
 
 int main()
 {
@@ -10,11 +8,11 @@ int main()
     int num;
     int pos = 0, depth1 = 0, depth2 = 0, aim = 0;
     while (input >> dir >> num) {
-        if (dir.compare("up") == 0) {
+        if (dir == "up") {
             depth1 -= num;
             aim -= num;
         }
-        else if (dir.compare("down") == 0) {
+        else if (dir == "down") {
             depth1 += num;
             aim += num;
         }
