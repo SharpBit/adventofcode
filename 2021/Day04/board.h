@@ -5,13 +5,8 @@ class Board {
 	
 public:
 	std::array<std::array<int, 5>, 5> bingo;
-	std::array<std::array<bool, 5>, 5> marked = { {
-		{false, false, false, false, false},
-		{false, false, false, false, false},
-		{false, false, false, false, false},
-		{false, false, false, false, false},
-		{false, false, false, false, false}
-	} };
+	std::array<std::array<bool, 5>, 5> marked;
+	Board();
 	bool checkCols();
 	bool checkRows();
 	bool checkBoard();

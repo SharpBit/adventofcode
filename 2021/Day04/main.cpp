@@ -48,7 +48,6 @@ int main()
 				else if (boards.size() == 1) {
 					lastWinningNum = n;
 					unmarkedSumL = boards[i].sumUnmarked();
-					
 				}
 
 				boards.erase(boards.begin() + i);  // remove the board that won so it doesn't get counted again

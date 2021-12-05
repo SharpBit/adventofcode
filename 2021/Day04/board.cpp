@@ -1,6 +1,14 @@
 #include "board.h"
 #include <iostream>
 
+Board::Board() {
+	for (int i = 0; i < marked.size(); i++) {
+		for (int j = 0; j < marked[0].size(); j++) {
+			marked[i][j] = false;
+		}
+	}
+}
+
 
 bool Board::checkCols() {
 	bool hasUnmarked;
@@ -76,7 +84,7 @@ void Board::displayBoard() {
 
 	for (int x = 0; x < marked.size(); x++) {
 		for (int y = 0; y < marked[0].size(); y++) {
-			std::cout << marked[x][y] << " ";
+			std::cout << std::boolalpha << marked[x][y] << " ";
 		}
 		std::cout << std::endl;
 	}
