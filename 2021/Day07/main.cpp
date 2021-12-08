@@ -9,6 +9,10 @@ int rangeSum(int n) {
 	return n * (n + 1) / 2;
 }
 
+int min(int a, int b) {
+	return a < b ? a : b;
+}
+
 int main() {
 	std::string line;
 	std::ifstream input("input.txt");
@@ -32,19 +36,22 @@ int main() {
 
 	std::cout << "Part 1: " << fuelCost << std::endl;
 
-	int mean = 0;
+	int sum = 0;
 	for (int i = 0; i < crabs.size(); i++) {
-		mean += crabs.at(i);
+		sum += crabs.at(i);
 	}
 
 	// The inputs are weird, for the sample input you need to round the mean, for the actual input I needed to floor it
-	// It's inconsistent but this worked for my actual input
-	mean = (double) mean / crabs.size();  // add + 0.5 at the end of this for the sample input to get 168
+	// I just do both and check to see which one results in a lower fuel cost and use that fuel cost.
+	int meanFloor = (double) sum / crabs.size();
+	int meanRound = (double)sum / crabs.size() + 0.5;
 
-	fuelCost = 0;
+	int fuelCostF = 0;
+	int fuelCostR = 0;
 	for (int i = 0; i < crabs.size(); i++) {
-		fuelCost += rangeSum(std::abs(mean - crabs.at(i)));
+		fuelCostF += rangeSum(std::abs(meanFloor - crabs.at(i)));
+		fuelCostR += rangeSum(std::abs(meanRound - crabs.at(i)));
 	}
-	std::cout << "Part 2: " << fuelCost << std::endl;
+	std::cout << "Part 2: " << min(fuelCostF, fuelCostR) << std::endl;
 	return 0;
 }
