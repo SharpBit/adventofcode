@@ -2,6 +2,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.pyc
+
+# visual studio and vscode stuff
 .vs/
 x64/
 Debug/
+*.vcxproj*
+
+# Google drive syncing
+/.tmp*
