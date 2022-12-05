@@ -14,16 +14,15 @@ with open('inputs/day01.txt') as f:
             total += int(line)
 
 @timed
-def part_one():
+def part_one(elf_cals):
     heapq.heapify(elf_cals)
     return -heapq.heappop(elf_cals)
 
 @timed
-def part_two():
+def part_two(elf_cals):
     heapq.heapify(elf_cals)
-    return sum(-heapq.heappop(elf_cals) for _ in range(2))
+    return sum(-heapq.heappop(elf_cals) for _ in range(3))
 
 
-most_cals = part_one()
-print(most_cals)
-print(most_cals + part_two())
+print(part_one(elf_cals.copy()))
+print(part_two(elf_cals.copy()))
