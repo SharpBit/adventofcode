@@ -1,0 +1,14 @@
+from utils import timed
+
+
+@timed
+def part_one():
+    pass
+
+@timed
+def part_two():
+    pass
+
+
+print(part_one())
+print(part_two())
