@@ -1,26 +1,17 @@
-from utils import timed
+from utils import read_split, timed
 
 import heapq
 
-elf_cals = []
 
-with open('inputs/day01.txt') as f:
-    total = 0
-    for line in f.readlines():
-        if line == '\n':
-            elf_cals.append(-total)
-            total = 0
-        else:
-            total += int(line)
+elf_cals = [sum([-int(c) for c in elf.split('\n')]) for elf in read_split('day01.txt', '\n\n')]
+heapq.heapify(elf_cals)
 
 @timed
 def part_one(elf_cals):
-    heapq.heapify(elf_cals)
     return -heapq.heappop(elf_cals)
 
 @timed
 def part_two(elf_cals):
-    heapq.heapify(elf_cals)
     return sum(-heapq.heappop(elf_cals) for _ in range(3))
 
 

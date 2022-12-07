@@ -1,7 +1,7 @@
-from utils import timed
+from utils import read_file, timed
 
 
-stream = open('inputs/day06.txt').read().strip()
+stream = read_file('day06.txt')
 
 @timed
 def part_one():

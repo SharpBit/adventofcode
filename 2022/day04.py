@@ -6,7 +6,8 @@ pairs = []
 with open('inputs/day04.txt') as f:
     for pair in f.readlines():
         match = re.search(r'(\d+)-(\d+),(\d+)-(\d+).*', pair)
-        pairs.append(tuple(map(int, match.groups())))
+        if match:
+            pairs.append(tuple(map(int, match.groups())))
 
 @timed
 def part_one():

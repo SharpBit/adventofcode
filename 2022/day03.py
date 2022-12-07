@@ -1,11 +1,7 @@
-from utils import timed
+from utils import read_lines, timed
 
 
-sacks = []
-with open('inputs/day03.txt') as f:
-    for s in f.readlines():
-        s = s.strip()
-        sacks.append((set(s[:len(s) // 2]), set(s[len(s) // 2:])))
+sacks = [(set(s[:len(s) // 2]), set(s[len(s) // 2:])) for s in read_lines('day03.txt')]
 
 def calc_prio(item):
     if item.isupper():

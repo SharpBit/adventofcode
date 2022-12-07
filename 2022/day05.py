@@ -1,28 +1,29 @@
-from utils import timed
+import re
+
 from collections import deque
 from copy import deepcopy
-import re
+
+from utils import read_lines, timed
 
 
 stacks = []
 instructions = []
 
-with open('inputs/day05.txt') as f:
-    procedure = False
-    for line in f.readlines():
-        if '[' not in line:
-            procedure = True
-        if not procedure:
-            for i in range(0, len(line), 4):
-                stack_num = int(i / 4)
-                if stack_num >= len(stacks):
-                    stacks.append(deque())
-                if line[i + 1] != ' ':
-                    stacks[stack_num].appendleft(line[i + 1])
-        else:
-            match = re.search(r'move (\d+) from (\d) to (\d).*', line)
-            if match:
-                instructions.append(tuple(map(int, match.groups())))
+procedure = False
+for line in read_lines('day05.txt'):
+    if '[' not in line:
+        procedure = True
+    if not procedure:
+        for i in range(0, len(line), 4):
+            stack_num = int(i / 4)
+            if stack_num >= len(stacks):
+                stacks.append(deque())
+            if line[i + 1] != ' ':
+                stacks[stack_num].appendleft(line[i + 1])
+    else:
+        match = re.search(r'move (\d+) from (\d) to (\d).*', line)
+        if match:
+            instructions.append(tuple(map(int, match.groups())))
 
 @timed
 def part_one(stacks, instructions):

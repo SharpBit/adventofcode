@@ -1,7 +1,7 @@
-from utils import timed
+from utils import read_lines, timed
 
 
-games = [tuple(g.strip().split(' ')) for g in open('inputs/day02.txt').readlines()]
+games = [tuple(g.split(' ')) for g in read_lines('day02.txt')]
 # rps
 # abc
 # xyz
