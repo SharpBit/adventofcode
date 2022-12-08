@@ -47,12 +47,11 @@ def part_one():
 
 @timed
 def part_two():
-    dir_sizes_local = dir_sizes.copy()
-    free_space = 70_000_000 - dfs(root)
+    free_space = 70_000_000 - dir_sizes[-1]  # in traversal, root size is appended last
     min_delete = 30_000_000 - free_space
-    heapq.heapify(dir_sizes_local)
-    while len(dir_sizes_local) > 0:
-        if (size := heapq.heappop(dir_sizes_local)) >= min_delete:
+    heapq.heapify(dir_sizes)
+    while len(dir_sizes) > 0:
+        if (size := heapq.heappop(dir_sizes)) >= min_delete:
             return size
 
 
