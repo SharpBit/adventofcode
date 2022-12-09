@@ -1,6 +1,7 @@
 [flake8]
 max-line-length=120
 ignore = 
+    E125,  # continuation line with same indent as next logical line
     E252,  # not using spaces around '=' in function arguments
     E302,  # expecting 2 blank lines between non-member functions
     E731,  # do not use lambda, use def
