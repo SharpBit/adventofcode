@@ -18,7 +18,7 @@ def read_lines(fname: str) -> list:
 
 def read_split(fname: str, sep: str) -> list:
     with open(f'inputs/{fname}') as f:
-        return [line.rstrip() for line in f.read().split(sep)]
+        return [s.rstrip() for s in f.read().split(sep)]
 
 def read_file(fname: str) -> str:
     with open(f'inputs/{fname}') as f:
