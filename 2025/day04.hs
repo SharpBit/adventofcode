@@ -44,8 +44,7 @@ part2 res grid =
     in
         if IntSet.null removed
         then res + (IntSet.size removed)
-        else
-            part2 (res + (IntSet.size removed)) newGrid
+        else part2 (res + (IntSet.size removed)) newGrid
 
 main :: IO ()
 main = do
