@@ -1,4 +1,5 @@
 import Utils (readLines)
+import Data.List (foldl')
 
 -- Given a string, return the max character and its index excluding the last n characters
 maxIndexExcluding :: (Char, Int) -> Int -> Int -> String -> (Char, Int)
