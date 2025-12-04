@@ -1,5 +1,5 @@
 import Utils (splitStr, pair, strip, slice)
-import Data.List (nub)
+import Data.List (nub, foldl')
 
 splitStrEqually :: Int -> String -> [String]
 splitStrEqually n str
@@ -16,12 +16,12 @@ invalidID n max id
 
 step1 :: Int -> (Int, Int) -> Int
 step1 res (start, end) =
-    let invalidIDs = [id | id <- [start..end + 1], invalidID 2 2 (show id)]
+    let invalidIDs = [id | id <- [start..end], invalidID 2 2 (show id)]
     in res + sum invalidIDs
 
 step2 :: Int -> (Int, Int) -> Int
 step2 res (start, end) =
-    let invalidIDs = [id | id <- [start..end + 1], invalidID 2 (length (show id)) (show id)]
+    let invalidIDs = [id | id <- [start..end], invalidID 2 (length (show id)) (show id)]
     in res + sum invalidIDs
 
 part1 :: [(Int, Int)] -> Int
