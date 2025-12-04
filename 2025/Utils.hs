@@ -4,7 +4,9 @@ module Utils (
     slice,
     splitStr,
     strip,
-    pair
+    pair,
+    addPairs,
+    validCoord
 ) where
 
 import System.IO
@@ -34,3 +36,11 @@ strip str = dropWhileEnd (`elem` whitespace) (dropWhile (`elem` whitespace) str)
 
 pair :: [a] -> (a, a)
 pair [x, y] = (x, y)
+
+-- Add the numbers of two pairs together
+addPairs :: Num a => (a, a) -> (a, a) -> (a, a)
+addPairs (a, b) (c, d) = (a + c, b + d)
+
+-- Checks if coordinate (r, c) is valid in an m x n grid with m rows and n cols
+validCoord :: Int -> Int -> (Int, Int) ->  Bool
+validCoord m n (r, c) = if r >= 0 && r < m && c >= 0 && c < n then True else False
