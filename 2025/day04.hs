@@ -12,10 +12,10 @@ adj = [
     (-1,  0),
     (-1,  1) ]
 
-step :: (Int, Int, Int, Int, IntSet.IntSet) -> [[Int]] -> (Int, Int, Int, Int, IntSet.IntSet)
+step :: (Int, Int, Int, Int, IntSet.IntSet) -> [[Int]] -> IntSet.IntSet
 step (r, c, m, n, removed) grid
     | r < m && c >= n = step (r + 1, 0, m, n, removed) grid
-    | r >= m = (r, c, m, n, removed)
+    | r >= m = removed
     | grid !! r !! c == 0 = step (r, c + 1, m, n, removed) grid
     | otherwise =
         let
@@ -29,7 +29,7 @@ step (r, c, m, n, removed) grid
 part1 :: [[Int]] -> Int
 part1 [] = 0
 part1 grid =
-    let (_, _, _, _, removed) = step (0, 0, length grid, length (head grid), IntSet.empty) grid
+    let removed = step (0, 0, length grid, length (head grid), IntSet.empty) grid
     in IntSet.size removed
 
 part2 :: Int -> [[Int]] -> Int
@@ -38,7 +38,7 @@ part2 res grid =
     let
         m = length grid
         n = length (head grid)
-        (_, _, _, _, removed) = step (0, 0, m, n, IntSet.empty) grid
+        removed = step (0, 0, m, n, IntSet.empty) grid
         newGrid :: [[Int]]
         newGrid = [[if grid !! r !! c == 0 || IntSet.member (r * n + c) removed then 0 else 1 | c <- [0..n - 1]] | r <- [0..n - 1]]
     in
