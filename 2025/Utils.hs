@@ -5,6 +5,7 @@ module Utils (
     splitStr,
     strip,
     pair,
+    triple,
     addPairs,
     validCoord
 ) where
@@ -36,6 +37,9 @@ strip str = dropWhileEnd (`elem` whitespace) (dropWhile (`elem` whitespace) str)
 
 pair :: [a] -> (a, a)
 pair [x, y] = (x, y)
+
+triple :: [a] -> (a, a, a)
+triple [x, y, z] = (x, y, z)
 
 -- Add the numbers of two pairs together
 addPairs :: Num a => (a, a) -> (a, a) -> (a, a)
