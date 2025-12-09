@@ -96,11 +96,7 @@ def part_one():
 def part_two():
     edges = [(tiles[i - 1], tiles[i]) for i in range(len(tiles))]
     areas = []
-    i = 0
     for p1, p2 in itertools.combinations(tiles, 2):
-        i += 1
-        if i % 10_000 == 0:
-            print(i)
         other_verts = ((p1[0], p2[1]), (p2[0], p1[1]))
         if not all(is_point_in_polygon(v, edges) for v in other_verts):
             # At least one corner of the rectangle is outside the polygon
